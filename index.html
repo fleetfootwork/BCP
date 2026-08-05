@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="description"
+    content="Continue or Replan? Bernoulli-Continuation Policy Learning for Adaptive Horizon Execution">
+  <meta name="keywords" content="VLA,Robotics,BCP">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Continue or Replan? Bernoulli-Continuation Policy Learning for Adaptive Horizon Execution</title>
+
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!--<link rel="icon" href="./static/images/favicon.svg">-->
+
+  <script src="./static/js/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+</head>
+
+<body>
+
+  <!--
+<nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://UniGraspTransformer.github.io">
+            UniGraspTransformer
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+-->
+
+
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title"><span
+                style="font-size:2.22rem;">Continue or Replan?</span><br><span
+                style="font-size:2.22rem;">Bernoulli-Continuation Policy Learning for <br> Adaptive Horizon Execution</span></h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                Weichen Xu<sup>1,2,‡*</sup>,
+              </span>
+              <span class="author-block">
+                Zhenhua Liu<sup>2,*</sup>,
+              </span>
+              <span class="author-block">
+                Lin Luo<sup>2</sup>,
+              </span>
+              <span class="author-block">
+                Yaobo Liang<sup>2</sup>,
+              </span>
+              <span class="author-block">
+                Chengtang Yao<sup>2</sup>,
+              </span>
+              <span class="author-block">
+                Qingyu Mei<sup>1,2,‡</sup>,
+              </span>
+
+              <span class="author-block">
+                Jian Cao<sup>1</sup>,
+              </span>
+
+              <span class="author-block">
+                Xixin Cao<sup>1</sup>,
+              </span>
+              <span class="author-block">
+                Xing Zhang<sup>1</sup>,
+              </span>
+
+              <span class="author-block">
+                Jiaolong Yang<sup>2,†</sup>,
+              </span>
+
+              <span class="author-block">
+                Baining Guo<sup>2</sup>
+              </span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <font size="-0.4"><sup>*</sup>Equal contribution &nbsp;</font>
+              </span>
+              <span class="author-block">
+                <font size="-0.4"><sup>†</sup>Corresponding author</font>
+              </span>
+              <span class="author-block">
+                <font size="-0.4"><sup>‡</sup>Interns at Microsoft Research &nbsp;</font>
+              </span><br>
+
+
+              <span class="author-block"><sup>1</sup>Peking University&nbsp;</span>
+              <span class="author-block"><sup>2</sup>Microsoft Research Asia&nbsp;</span>
+            </div>
+
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2608.03483" class="external-link button is-normal is-rounded is-dark" target="_blank">
+                    <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="javascript:void(0);" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                  </a>
+                </span>
+                <!-- Model Link. -->
+                <span class="link-block">
+                  <a href="javascript:void(0);" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                      🤗
+                    </span>
+                    <span>Model</span>
+                  </a>
+                </span>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="hero-body">
+        <!--<video id="teaser" autoplay muted loop playsinline height="100%">
+        <source src="./static/videos/teaser.mp4"
+                type="video/mp4">
+      </video>-->
+        <div style="max-width: 90%; margin: 0 auto 2.5rem auto;">
+          <div style="position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 10px;">
+            <iframe
+              style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+              src="https://www.youtube-nocookie.com/embed/EuQEo7m6VDI?rel=0&modestbranding=1&playsinline=1"
+              title="Demo"
+              loading="lazy"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            Existing chunk-based Vision-Language-Action (VLA) models execute a fixed number of actions (i.e., execution horizon) before replanning, turning replanning into a task-agnostic periodic schedule that is independent of task progress.
+            As a result, when no replanning boundary falls before a critical manipulation stage, it is executed from a stale chunk rather than a freshly replanned one.
+            To address this limitation, we propose <b>B</b>ernoulli-<b>C</b>ontinuation <b>P</b>olicy (<b>BCP</b>), a lightweight, plug-and-play framework for adaptive horizon execution that keeps the base VLA frozen.
+            Given a fixed-length action chunk, its continuation head decomposes execution-horizon selection into a sequence of continue-or-replan decisions, which imposes an ordinal, prefix-sharing inductive bias over candidate horizons rather than treating them as independent classes.
+            Since the optimal horizon for each chunk is not observable, we train this head with reinforcement learning from trajectory-level outcomes and introduce a Replanning-Efficiency Reward that jointly rewards task success and efficient VLA usage, discouraging the policy from collapsing to unnecessarily short horizons. 
+            On RoboTwin 2.0 with LingBot-VLA as the base policy, BCP improves the average success rate by <b>+11.08%</b> on 13 low-success tasks and from 89.88% to <b>93.94%</b> (<b>+4.06%</b>) across all 50 tasks.
+            Although trained only under the Clean setting, BCP generalizes to the Randomized setting, raising the average success rate by <b>+4.06%</b>. It also transfers to a different base policy &pi;<sub>0.5</sub>, achieving a better result on LIBERO (<b>+1.7%</b>) and, notably, on the harder LIBERO-PRO (<b>+6.8%</b>), where its advantage widens as tasks become more difficult. On a real robot, BCP lifts success from 74% to 92% and from 44% to 84% on two manipulation tasks. Meanwhile, its negligible overhead, combined with higher success, makes BCP's overall runtime even lower than the fixed-horizon baselines.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="column is-full-width">
+        <h3 class="title is-3">Bernoulli-Continuation Policy Learning</h3>
+
+        <div class="content has-text-justified has-text-centered">
+          <img src="static/images/figure_2.webp" style="margin-bottom: 1.2rem;" />
+          <p>
+            Our core idea is to replace fixed-horizon action-chunk execution with a lightweight <b>Bernoulli-Continuation Policy</b> that adaptively decides whether to continue or replan, aligning fresh observations with critical manipulation stages while preserving execution efficiency. Our contributions are summarized as follows:
+          <ul>
+            <li>We identify <b>replanning-timing misalignment</b> as a key failure mode of fixed-horizon chunk execution, 
+              and formulate adaptive execution-horizon selection as a sequence of continue-or-replan decisions 
+              that captures the ordinal, prefix-sharing structure of candidate horizons.</li>
+            <li>We propose the <b>Bernoulli-Continuation Policy</b>, a lightweight, plug-and-play framework that 
+              keeps the base VLA frozen and is trained with reinforcement learning from trajectory-level outcomes.</li>
+            <li>We introduce a <b>Replanning-Efficiency Reward</b> that jointly encourages task success and execution 
+              efficiency, preventing the policy from collapsing to unnecessarily short horizons.</li>
+            <li>We demonstrate on RoboTwin 2.0, LIBERO, and real robot that BCP achieves better performance than baselines, 
+              generalizes to Randomized settings, and preserves the runtime efficiency of action chunking.</li>
+          </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="column is-full-width">
+        <h3 class="title is-3" style="margin-top: -30pt;">Benchmark Results</h3>
+
+        <h3 class="title is-4">Evaluation on RoboTwin 2.0</h3>
+        <div class="content has-text-justified has-text-centered">
+          <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="100%">
+                <img src="static/images/table_2.png" />
+                <p class="has-text-centered" style="margin-top: -0.5em;"> Success rate comparison on RoboTwin 2.0. The table lists 13 low-success tasks where the LingBot-VLA obtains below
+                  90% success rate under the Clean setting, together with average results over all 50 tasks. <span style="font-size: 80%;">(† denotes the addition of BCP.)</span></p>
+              </td>
+            </tr>
+          </table>
+          <p>
+            Key observations from the RoboTwin 2.0 results:
+          <ul>
+            <li>With the proposed BCP, LingBot-VLA improves from 75.15% to <b>86.23%</b> on these 13 low-success tasks, yielding an absolute gain of <b>11.08%</b>.</li>
+            <li>Across all 50 RoboTwin 2.0 tasks, LingBot-VLA + BCP further improves the average success rate from 89.88% to <b>93.94%</b>, achieving a <b>4.06%</b> gain and the state-of-the-art performance among all VLA methods. Similar trends are also observed with ABot-M0 and ACT.</li>
+            <li>Although BCP is trained only under the Clean setting, we directly test it under the <b>Randomized</b> setting. On the 13 low-success tasks, LingBot-VLA + BCP improves the success rate from 73.54% to <b>83.46%</b>, yielding a <b>9.92%</b> absolute gain. Across all 50 RoboTwin 2.0 tasks, BCP improves the average success rate from 88.78% to <b>92.84%</b>, with a <b>4.06%</b> gain, and again achieves the state-of-the-art performance.</li>
+          </ul>
+          </p>
+
+
+        </div>
+
+        <h3 class="title is-4">Evaluation on LIBERO and LIBERO-PRO</h3>
+        <div class="content has-text-justified has-text-centered">
+          <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="100%" align="center">
+                <img src="static/images/table_3.png" />
+                <p class="has-text-centered" style="margin-top: -0.5em;"> Success rates (%) of different execution strategies with &pi;<sub>0.5</sub> on LIBERO and LIBERO-PRO.</p>
+              </td>
+            </tr>
+          </table>
+          <p>
+            Key observations from the LIBERO and LIBERO-PRO results:
+          <ul>
+            <li>BCP achieves the best performance across all four LIBERO task suites, improving the average success rate of &pi;<sub>0.5</sub> from 97.0% to <b>98.7%</b> and outperforming both AAC and AutoHorizon.</li>
+            <li>On LIBERO-PRO, we evaluate position perturbations of different magnitudes on the Object suite. BCP improves the average success rate from 30.9% to 37.7%, corresponding to a <b>2.9%</b> gain over AAC.</li>
+          </ul>
+          </p>
+        </div>
+
+
+        <h3 class="title is-3">Runtime Efficiency</h3>
+        <div class="content has-text-justified has-text-centered">
+          <p>
+            We conduct a runtime-efficiency evaluation on all 50 RoboTwin 2.0 tasks under the Clean setting, measuring per-query inference time, VLA calls, executed control steps, and the estimated runtime.
+          </p>
+          <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 1.2rem;">
+            <tr>
+              <td width="100%" align="center">
+                <img src="static/images/table_4.png"/>
+                <p class="has-text-centered" style="margin-top: -0.5em;"> Runtime cost comparison on 50 RoboTwin 2.0 tasks under the Clean setting.</p>
+              </td>
+            </tr>
+          </table>
+          <p>
+          <ul>
+            <li><b>Negligible inference overhead</b>: BCP adds only 2.03 ms per VLA query.</li>
+            <li>Although BCP slightly increases VLA calls from 5.382 to 5.614, it reduces executed control steps from 269.075 to 248.102, lowering the estimated runtime from 10.43 s to <b>10.24 s</b>.</li>
+          </ul>
+          </p>
+        </div>
+
+        <h3 class="title is-3">Comparison with Execution-Horizon Strategies</h3>
+        <div class="content has-text-justified has-text-centered">
+          <p>
+            We compare BCP with eight execution-horizon strategies built upon LingBot-VLA on all 50 RoboTwin 2.0 tasks under the Clean setting, evaluating their success-rate–runtime trade-off.
+          </p>
+          <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 1.2rem;">
+            <tr>
+              <td width="100%" align="center">
+                <img src="static/images/figure_4.png"/>
+                <p class="has-text-centered" style="margin-top: -0.5em;"> SR–runtime trade-off of execution-horizon strategies on 50 RoboTwin 2.0 tasks under the Clean setting.</p>
+              </td>
+            </tr>
+          </table>
+          <p>
+          <ul>
+            <li>Fixed 20 fails to outperform full-chunk execution because a uniformly shorter horizon can still misalign replanning with critical manipulation stages.</li>
+            <li>Uncertainty Proxy and AAC incur <b>substantially higher runtime</b> because they require sampling multiple action chunks.</li>
+            <li>While most competing strategies provide only marginal gains or even degrade performance, BCP improves the average success rate by <b>4.06%</b> and achieves the <b>lowest runtime</b> by replanning only when necessary.</li>
+          </ul>
+          </p>
+        </div>
+
+
+        <h3 class="title is-3" style="margin-top: 60px;">Video Result Samples</h3>
+        <h4 class="title is-4">RoboTwin 2.0</h4>
+
+        <h5 class="title is-5">Place Dual Shoes</h5>
+        <div class="columns is-mobile is-vcentered">
+          <div class="column has-text-centered">
+            <video autoplay controls muted loop playsinline width="80%" style="border-radius: 10px;">
+              <source src="static/videos/robotwin/shoes-sft.mp4" type="video/mp4">
+            </video>
+            <div><b>LingBot-VLA</b></div>
+          </div>
+          <div class="column has-text-centered">
+            <video autoplay controls muted loop playsinline width="80%" style="border-radius: 10px;">
+              <source src="static/videos/robotwin/shoes-bcp.mp4" type="video/mp4">
+            </video>
+            <div><b>LingBot-VLA + BCP</b></div>
+          </div>
+        </div>
+        <div class="has-text-centered">
+          <img src="static/videos/robotwin/shoes-vis.png" style="border-radius: 10px; max-width: 100%;" />
+        </div>
+        <br />
+
+        <h5 class="title is-5">Place Bread Basket</h5>
+        <div class="columns is-mobile is-vcentered">
+          <div class="column has-text-centered">
+            <video autoplay controls muted loop playsinline width="80%" style="border-radius: 10px;">
+              <source src="static/videos/robotwin/bread-sft.mp4" type="video/mp4">
+            </video>
+            <div><b>LingBot-VLA</b></div>
+          </div>
+          <div class="column has-text-centered">
+            <video autoplay controls muted loop playsinline width="80%" style="border-radius: 10px;">
+              <source src="static/videos/robotwin/bread-bcp.mp4" type="video/mp4">
+            </video>
+            <div><b>LingBot-VLA + BCP</b></div>
+          </div>
+        </div>
+        <div class="has-text-centered">
+          <img src="static/videos/robotwin/bread-vis.png" style="border-radius: 10px; max-width: 100%;" />
+        </div>
+        <br />
+
+        <h5 class="title is-5">Hanging Mug</h5>
+        <div class="columns is-mobile is-vcentered">
+          <div class="column has-text-centered">
+            <video autoplay controls muted loop playsinline width="80%" style="border-radius: 10px;">
+              <source src="static/videos/robotwin/mug-sft.mp4" type="video/mp4">
+            </video>
+            <div><b>LingBot-VLA</b></div>
+          </div>
+          <div class="column has-text-centered">
+            <video autoplay controls muted loop playsinline width="80%" style="border-radius: 10px;">
+              <source src="static/videos/robotwin/mug-bcp.mp4" type="video/mp4">
+            </video>
+            <div><b>LingBot-VLA + BCP</b></div>
+          </div>
+        </div>
+        <div class="has-text-centered">
+          <img src="static/videos/robotwin/mug-vis.png" style="border-radius: 10px; max-width: 100%;" />
+        </div>
+        <br />
+
+        <h4 class="title is-4" style="width: 100%;">Real Robot: AGIBOT G1</h4>
+
+        <h5 class="title is-5">Grasping Bottle</h5>
+        <div class="columns is-vcentered">
+          <!-- Left: 2x2 videos with row labels -->
+          <div class="column is-two-thirds">
+            <!-- Row 1 -->
+            <div class="columns is-mobile is-vcentered">
+              <div class="column is-narrow has-text-centered">
+                <span style="writing-mode: vertical-rl; transform: rotate(180deg); font-weight: bold;">Demo 1</span>
+              </div>
+              <div class="column has-text-centered">
+                <video autoplay controls muted loop playsinline width="100%" style="border-radius: 10px;">
+                  <source src="static/videos/agibot/full_bottle_2.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="column has-text-centered">
+                <video autoplay controls muted loop playsinline width="100%" style="border-radius: 10px;">
+                  <source src="static/videos/agibot/bcp_bottle_2.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <!-- Row 2 -->
+            <div class="columns is-mobile is-vcentered">
+              <div class="column is-narrow has-text-centered">
+                <span style="writing-mode: vertical-rl; transform: rotate(180deg); font-weight: bold;">Demo 2</span>
+              </div>
+              <div class="column has-text-centered">
+                <video autoplay controls muted loop playsinline width="100%" style="border-radius: 10px;">
+                  <source src="static/videos/agibot/full_bottle_3.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="column has-text-centered">
+                <video autoplay controls muted loop playsinline width="100%" style="border-radius: 10px;">
+                  <source src="static/videos/agibot/bcp_bottle_3.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <!-- Column labels -->
+            <div class="columns is-mobile is-vcentered" style="margin-top: -2.0rem;">
+              <div class="column is-narrow has-text-centered">
+                <span style="writing-mode: vertical-rl; visibility: hidden; font-weight: bold;">Demo</span>
+              </div>
+              <div class="column has-text-centered"><b>LingBot-VLA</b></div>
+              <div class="column has-text-centered"><b>LingBot-VLA + BCP</b></div>
+            </div>
+          </div>
+          <!-- Right: one image -->
+          <div class="column is-one-third has-text-centered">
+            <img src="static/videos/agibot/bottle.png" style="border-radius: 10px; max-width: 75%;" />
+          </div>
+        </div>
+
+        <h5 class="title is-5">Hanging Mug</h5>
+        <div class="columns is-vcentered">
+          <!-- Left: 2x2 videos with row labels -->
+          <div class="column is-two-thirds">
+            <!-- Row 1 -->
+            <div class="columns is-mobile is-vcentered">
+              <div class="column is-narrow has-text-centered">
+                <span style="writing-mode: vertical-rl; transform: rotate(180deg); font-weight: bold;">Demo 1</span>
+              </div>
+              <div class="column has-text-centered">
+                <video autoplay controls muted loop playsinline width="100%" style="border-radius: 10px;">
+                  <source src="static/videos/agibot/full_seed46.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="column has-text-centered">
+                <video autoplay controls muted loop playsinline width="100%" style="border-radius: 10px;">
+                  <source src="static/videos/agibot/bcp_seed46.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <!-- Row 2 -->
+            <div class="columns is-mobile is-vcentered">
+              <div class="column is-narrow has-text-centered">
+                <span style="writing-mode: vertical-rl; transform: rotate(180deg); font-weight: bold;">Demo 2</span>
+              </div>
+              <div class="column has-text-centered">
+                <video autoplay controls muted loop playsinline width="100%" style="border-radius: 10px;">
+                  <source src="static/videos/agibot/full_seed24.mp4" type="video/mp4">
+                </video>
+              </div>
+              <div class="column has-text-centered">
+                <video autoplay controls muted loop playsinline width="100%" style="border-radius: 10px;">
+                  <source src="static/videos/agibot/bcp_seed24.mp4" type="video/mp4">
+                </video>
+              </div>
+            </div>
+            <!-- Column labels -->
+            <div class="columns is-mobile is-vcentered" style="margin-top: -2.0rem;">
+              <div class="column is-narrow has-text-centered">
+                <span style="writing-mode: vertical-rl; visibility: hidden; font-weight: bold;">Demo</span>
+              </div>
+              <div class="column has-text-centered"><b>LingBot-VLA</b></div>
+              <div class="column has-text-centered"><b>LingBot-VLA + BCP</b></div>
+            </div>
+          </div>
+          <!-- Right: one image -->
+          <div class="column is-one-third has-text-centered">
+            <img src="static/videos/agibot/mug.png" style="border-radius: 10px; max-width: 75%;" />
+          </div>
+        </div>
+
+        <h3 class="title is-3" style="margin-top: 30pt;">Ablation Study</h3>
+        <div class="content has-text-justified has-text-centered">
+          <p>
+            We conduct a joint ablation and runtime-efficiency analysis on the <i>Hanging Mug</i> under the Clean setting of RoboTwin 2.0.
+          </p>
+          <table width="100%" align="center" border="0" cellspacing="0" cellpadding="0" style="margin-bottom: 1.2rem;">
+            <tr>
+              <td width="100%" align="center">
+                <img src="static/images/table_abla.png" />
+              </td>
+            </tr>
+          </table>
+          <p>
+          <ul>
+            <li>Training a lightweight adaptive horizon-selection head achieves performance comparable to directly fine-tuning the 442.803M-parameter action expert, while requiring only about <b>16.4M</b> trainable parameters.</li>
+            <li>Replacing the conventional Softmax Head with the <b>BC Head</b> raises the success rate from 78% to <b>83%</b>, validating the benefit of <b>modeling the ordinal, prefix-sharing structure of candidate horizons</b>.</li>
+            <li>Although the Softmax and BC Heads execute fewer control steps than the fixed-horizon variant, their tendency toward short horizons increases expensive VLA calls and results in longer runtime.</li>
+            <li>Adding RER reduces VLA calls from 13.825 to 10.158, improves the success rate from 83% to <b>87%</b>, and lowers runtime from 21.55 s to <b>18.17 s</b>, achieving both <b>the highest success rate</b> and <b>the lowest runtime among</b> all variants.</li>
+          </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre>
+<code>@article{xu2026continue,
+  title={Continue or Replan? Bernoulli-Continuation Policy Learning for Adaptive Horizon Execution},
+  author={Weichen Xu, Zhenhua Liu, Lin Luo, Yaobo Liang, Chengtang Yao, Qingyu Mei, Jian Cao, Xixin Cao, Xing Zhang, Jiaolong Yang, Baining Guo},
+  journal={arXiv preprint arXiv:2608.03483},
+  year={2026}
+}</code></pre>
+    </div>
+  </section>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content">
+            <p> Website adapted from <a href="https://github.com/nerfies/nerfies.github.io">NeRFies</a> under a <a
+                href="https://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0
+                International</a>
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+</body>
+
+</html>
